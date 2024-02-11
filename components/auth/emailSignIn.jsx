@@ -11,22 +11,21 @@ import { toast } from "../ui/use-toast";
 const EmailSignIn = () => {
     const [email, setEmail] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     const signInEmail = async () => {
         try {
-            if (!email) {
-                return
-            }
             setLoading(true)
+            if (email === null || email === undefined || email === "") {
+                setError(true)
+                return false
+            }
             const signInResult = await signIn("email", {
                 email,
                 callbackUrl: `${window.location.origin}`,
                 redirect: false
             })
-
-            console.log("signInResult", signInResult);
-
-            setEmail(" ")
+            setEmail("")
             if (signInResult.error !== null) {
                 return toast({
                     title: "well this did not work...",
@@ -39,7 +38,10 @@ const EmailSignIn = () => {
                 description: "A magic link has been sent to email"
             })
         } catch (error) {
-            console.error(error);
+            return toast({
+                title: "check your email",
+                description: "A magic link has been sent to email"
+            })
         } finally {
             setLoading(false)
         }
@@ -48,17 +50,17 @@ const EmailSignIn = () => {
     return (
         <form>
             <div className="flex flex-col gap-y-2">
-                <Label>Email</Label>
+                <Label>Email {error && <span className="text-red-500 ml-1">*</span>}</Label>
                 <Input
                     onChange={(e) => setEmail(e.target.value)}
                     name="email"
                     type="email"
                     value={email || ""}
-                    placeholder="name@example.com"
+                    placeholder="john@example.com"
                 />
             </div>
 
-            <Button type="submit" disabled={loading} className="mt-4 w-full" onClick={(e) => signInEmail()}>
+            <Button type="button" disabled={loading} className="mt-4 w-full" onClick={signInEmail}>
                 {!loading ? "Login with Email" : "Loading..."}
             </Button>
         </form>
