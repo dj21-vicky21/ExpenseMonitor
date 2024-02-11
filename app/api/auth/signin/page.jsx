@@ -22,18 +22,18 @@ export default async function LoginPage() {
     }
 
     return (
-        <div className="w-screen h-screen flex items-center justify-center">
+        <div className="w-screen flex items-center justify-center">
             <Card>
                 <CardHeader>
                     <CardTitle>Hi!</CardTitle>
                     <CardDescription>
-                        To view the private page, authentication is required.
+                        To view this page, authentication is required.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-col">
                         <EmailSignIn />
-                        <div className="w-full grid place-items-center mt-4 bg-gray-500/25 h-0.5"><span className="-mt-2.5 bg-white px-2">or</span></div>
+                        <div className="w-full grid place-items-center mt-4 bg-gray-500/25 h-0.5"><span className="-mt-2.5 bg-white dark:bg-[hsl(var(--card))] px-2">or</span></div>
                         <GithubSignIn />
                         <GoogleSignIn />
                     </div>
