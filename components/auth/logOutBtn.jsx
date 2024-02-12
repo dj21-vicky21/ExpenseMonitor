@@ -1,9 +1,9 @@
 "use client"
 
 import { signOut } from "next-auth/react";
-import { Button } from "../ui/button";
 import { useState } from "react";
 import { toast } from "../ui/use-toast";
+import { LogOut } from "lucide-react";
 
 const LogoutBtn = () => {
     const [loading, setLoading] = useState(false)
@@ -23,7 +23,10 @@ const LogoutBtn = () => {
         }
     }
 
-    return (<Button disabled={loading} onClick={onclick}>{loading ? "Loading..." : 'Logout'}</Button>);
+    return (
+        <div disabled={loading} onClick={onclick} className={'flex items-center gap-1'} >
+            <LogOut size={14} /> {loading ? "Loading..." : 'Logout'}
+        </div>);
 }
 
 export default LogoutBtn;
