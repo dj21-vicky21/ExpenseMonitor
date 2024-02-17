@@ -12,9 +12,11 @@ function Sidebar({ className }) {
     ]
 
     return (
-        <div className={cn('md:w-80 md:border-r border-r-gray ', className)}>
+        <div className={cn('md:w-80', className)}>
             {menu.map((menu, index) =>
-                <Link key={index} href={menu.link} className={cn("relative flex gap-3 mb-2 cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground",)} >{menu.icon} {menu.name}</Link>
+                <h3>
+                    <Link key={index} href={menu.link} className={cn("text-lg relative flex gap-3 mb-2 cursor-pointer select-none items-center rounded-sm px-2 py-1.5 outline-none transition-colors hover:bg-accent hover:text-accent-foreground",)} >{menu.icon} {menu.name}</Link>
+                </h3>
             )}
         </div>
     )
