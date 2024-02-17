@@ -25,10 +25,10 @@ const UserProfile = ({ user }) => {
                         </div>
                     </div>
                 </div>
-                <DropdownMenuItem>
+                <DropdownMenuItem className={"p-0"}>
                     <RedirectLink />
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
+                <DropdownMenuItem className="p-0">
                     <LogoutBtn />
                 </DropdownMenuItem>
             </DropdownMenuContent>

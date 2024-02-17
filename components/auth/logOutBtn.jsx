@@ -25,7 +25,7 @@ const LogoutBtn = ({ className }) => {
     }
 
     return (
-        <div disabled={loading} onClick={onclick} className={cn('flex gap-1 items-center w-full', className)} >
+        <div disabled={loading} onClick={onclick} className={cn('flex gap-1 items-center w-full px-2 py-1.5', className)} >
             <LogOut size={14} /> {loading ? "Loading..." : 'Logout'}
         </div>);
 }
