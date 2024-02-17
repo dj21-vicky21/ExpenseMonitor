@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Providers from "@/components/providers";
 import Navbar from "./_components/navbar";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn("flex h-full flex-col",inter.className)}>
         <Providers>
           <Navbar/>
           {children}<Toaster />

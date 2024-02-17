@@ -16,7 +16,7 @@ export default function GoogleSignIn() {
         try {
             setLoading(true)
             const access = await signIn("google", {
-                callbackUrl: `${window.location.origin}`
+                callbackUrl: `${window.location.origin}/home`
             })
         } catch (error) {
             return toast({

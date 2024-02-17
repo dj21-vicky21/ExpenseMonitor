@@ -10,7 +10,7 @@ const Navbar = async () => {
     return <>
         <nav>
             <div className="w-full dark:bg-secondary h-14 shadow-md dark:shadow-none  px-4 md:px-12">
-                <div className="flex items-center justify-between max-w-7xl mx-auto h-full">
+                <div className="flex items-center justify-between mx-auto h-full">
                     <p>Logo</p>
                     <div className="flex items-center gap-5">
                         <ModeToggle />

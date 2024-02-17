@@ -23,7 +23,7 @@ const EmailSignIn = () => {
             setLoading(true)
             const signInResult = await signIn("email", {
                 email,
-                callbackUrl: `${window.location.origin}`,
+                callbackUrl: `${window.location.origin}/home`,
                 redirect: false
             })
             setEmail("")
