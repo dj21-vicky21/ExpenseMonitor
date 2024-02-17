@@ -5,6 +5,8 @@ import { signIn } from "next-auth/react"
 import { useState } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { toast } from "../ui/use-toast";
+import { LoaderIcon } from "lucide-react";
+
 
 export default function GoogleSignIn() {
 
@@ -19,7 +21,7 @@ export default function GoogleSignIn() {
         } catch (error) {
             return toast({
                 title: "well this did not work...",
-                description: "something went wrong,please try again",
+                description: "something went wrong, please try again",
                 variant: "destructive"
             })
         } finally {
@@ -31,7 +33,7 @@ export default function GoogleSignIn() {
         <Button disabled={loading} onClick={onClick}
             className="mt-4 w-full"
             variant="secondary">
-            <FaGoogle className="w-4 h-4 mr-4" /> {loading ? "Loading..." : "Login Google"}
+            {loading ? <LoaderIcon /> : <><FaGoogle className="w-4 h-4 mr-4" /> Login Google</>}
         </Button>
     )
 }

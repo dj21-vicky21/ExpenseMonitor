@@ -8,6 +8,6 @@ global.prisma = undefined;
 
 const prisma = global.prisma ?? prismaClientSingleton();
 
-module.exports = prisma;
-
 if (process.env.NODE_ENV !== 'production') global.prisma = prisma;
+
+module.exports = prisma;

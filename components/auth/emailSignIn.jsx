@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { toast } from "../ui/use-toast";
+import { Loader2Icon, LoaderIcon } from "lucide-react";
 
 const EmailSignIn = () => {
     const [email, setEmail] = useState(null);
@@ -15,11 +16,11 @@ const EmailSignIn = () => {
 
     const signInEmail = async () => {
         try {
-            setLoading(true)
             if (email === null || email === undefined || email === "") {
                 setError(true)
                 return false
             }
+            setLoading(true)
             const signInResult = await signIn("email", {
                 email,
                 callbackUrl: `${window.location.origin}`,
@@ -58,10 +59,11 @@ const EmailSignIn = () => {
                     value={email || ""}
                     placeholder="john@example.com"
                 />
+                {error && <span className="text-red-500 text-xs">Required</span>}
             </div>
 
             <Button type="button" disabled={loading} className="mt-4 w-full" onClick={signInEmail}>
-                {!loading ? "Login with Email" : "Loading..."}
+                {loading ? <LoaderIcon /> : 'Login with Email'}
             </Button>
         </form>
     );

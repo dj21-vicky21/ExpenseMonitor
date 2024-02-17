@@ -1,6 +1,3 @@
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-
 import {
     Card,
     CardContent,
@@ -8,18 +5,11 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { authOptions } from "../utils/authOptions";
 import GithubSignIn from "@/components/auth/githubSignIn";
 import EmailSignIn from "@/components/auth/emailSignIn";
 import GoogleSignIn from "@/components/auth/googleSignIn";
 
-export default async function LoginPage() {
-
-    const session = await getServerSession(authOptions)
-
-    if (session) {
-        redirect('/')
-    }
+export default function LoginPage() {
 
     return (
         <div className="w-screen flex items-center justify-center">
