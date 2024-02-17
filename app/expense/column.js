@@ -10,6 +10,8 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Checkbox } from "@/components/ui/checkbox"
+
 
 const sorting = (column, label) => {
     return (
@@ -24,6 +26,30 @@ const sorting = (column, label) => {
 }
 
 export const columns = [
+    {
+        id: "select",
+        header: ({ table }) => (
+            <div className="flex items-center">
+                <Checkbox
+                    checked={
+                        table.getIsAllPageRowsSelected() ||
+                        (table.getIsSomePageRowsSelected() && "indeterminate")
+                    }
+                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                    aria-label="Select all"
+                />
+            </div>
+        ),
+        cell: ({ row }) => (
+            <div className="flex items-center">
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                />
+            </div>
+        )
+    },
     {
         accessorKey: "date",
         header: ({ column }) => sorting(column, "Date")
@@ -71,5 +97,5 @@ export const columns = [
                 </DropdownMenu>
             )
         },
-    },
+    }
 ]
