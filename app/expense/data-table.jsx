@@ -20,6 +20,8 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { rankItem } from "@tanstack/match-sorter-utils"
+import { Button } from "@/components/ui/button"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 
 export function DataTable({ columns, data, }) {
@@ -60,6 +62,10 @@ export function DataTable({ columns, data, }) {
         },
     })
 
+    React.useEffect(() => {
+        table.setPageSize(10);
+    }, [])
+
     return (
         <div>
             <div className="flex items-center py-4">
@@ -72,7 +78,7 @@ export function DataTable({ columns, data, }) {
                     className="max-w-sm"
                 />
             </div>
-            <div className="rounded-md border">
+            <div className="rounded-md border min-h-[585px]">
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -115,15 +121,15 @@ export function DataTable({ columns, data, }) {
                         )}
                     </TableBody>
                 </Table>
-                <select
-                    value={table.getState().pagination.pageSize}
-                    onChange={e => {
-                        table.setPageSize(Number(e.target.value))
-                    }}
-                >
-                </select>
+            </div>
+            {/* <Button onClick={()=>table.setPageIndex(1)}>Prev</Button> */}
+            <div className="flex items-center justify-center gap-5 mt-10">
+                {table.getPageCount() > 1 &&
+                    <>
+                        <Button variant={'outline'} disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()}><ChevronLeft /></Button>
+                        <Button variant={'outline'} disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}><ChevronRight /></Button>
+                    </>}
             </div>
         </div>
-
     )
 }

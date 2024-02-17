@@ -205,7 +205,7 @@ async function Expense() {
         <p className=' font-bold'>Expense</p>
         <Button variant="secondary">Add</Button>
       </div>
-      <div>
+      <div className='p-2'>
         <DataTable columns={columns} data={data} />
       </div>
     </div>
