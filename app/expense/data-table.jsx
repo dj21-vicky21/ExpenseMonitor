@@ -7,7 +7,15 @@ import {
     getSortedRowModel,
     getFilteredRowModel,
     getPaginationRowModel,
+    VisibilityState
 } from "@tanstack/react-table"
+
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 import {
     Table,
@@ -21,13 +29,14 @@ import {
 import { Input } from "@/components/ui/input"
 import { rankItem } from "@tanstack/match-sorter-utils"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, SearchIcon } from "lucide-react"
 
 
 export function DataTable({ columns, data, }) {
 
     const [sorting, setSorting] = React.useState([])
     const [globalFilter, setGlobalFilter] = React.useState([])
+    const [columnVisibility, setColumnVisibility] = React.useState({})
 
 
     const fuzzyFilter = (row, columnId, value, addMeta) => {
@@ -56,28 +65,63 @@ export function DataTable({ columns, data, }) {
         getFilteredRowModel: getFilteredRowModel(),
         onGlobalFilterChange: setGlobalFilter,
         globalFilterFn: fuzzyFilter,
+        onColumnVisibilityChange: setColumnVisibility,
         state: {
             sorting,
-            globalFilter
+            globalFilter,
+            columnVisibility
         },
     })
 
     React.useEffect(() => {
-        table.setPageSize(10);
+        table.setPageSize(15);
     }, [])
 
     return (
         <div>
-            <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter emails..."
-                    value={globalFilter}
-                    onChange={(event) =>
-                        setGlobalFilter(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
+            <div className="flex items-center justify-between gap-5 py-4">
+                <div className="flex items-center relative">
+                    <SearchIcon className="absolute left-2.5" size={16} color="gray" />
+                    <Input
+                        placeholder="Search"
+                        value={globalFilter}
+                        onChange={(event) =>
+                            setGlobalFilter(event.target.value)
+                        }
+                        className="pl-8 max-w-sm"
+                    />
+                </div>
+                <DropdownMenu >
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="ml-auto">
+                            Columns
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        {table
+                            .getAllColumns()
+                            .filter(
+                                (column) => column.getCanHide()
+                            )
+                            .map((column) => {
+                                return (
+                                    <DropdownMenuCheckboxItem
+                                        key={column.id}
+                                        disabled={column.id === "description" || column.id === "amount"}
+                                        className="capitalize"
+                                        checked={column.getIsVisible()}
+                                        onCheckedChange={(value) =>
+                                            column.toggleVisibility(!!value)
+                                        }
+                                    >
+                                        {column.id}
+                                    </DropdownMenuCheckboxItem>
+                                )
+                            })}
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
+
             <div className="rounded-md border min-h-[585px]">
                 <Table>
                     <TableHeader>
