@@ -9,13 +9,13 @@ export const columns = [
         accessorKey: "date",
         header: ({ column }) => {
             return (
-                <Button
-                    variant="secondary"
+                <div
+                    className="flex items-center select-none cursor-pointer"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Date
                     <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
+                </div>
             )
         },
     },
@@ -27,13 +27,13 @@ export const columns = [
         accessorKey: "amount",
         header: ({ column }) => {
             return (
-                <Button
-                    variant="secondary"
+                <div
+                    className="flex items-center select-none cursor-pointer"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Amount
                     <ArrowUpDown className="ml-2 h-4 w-4" />
-                </Button>
+                </div>
             )
         },
     },
