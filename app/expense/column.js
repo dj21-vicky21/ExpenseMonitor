@@ -12,6 +12,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
 
+import { useStore } from "@/store"
+
+
 
 const sorting = (column, label) => {
     return (
@@ -91,8 +94,8 @@ export const columns = [
                             Copy payment ID
                         </DropdownMenuItem> */}
                         {/* <DropdownMenuSeparator /> */}
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
+                        <DropdownMenuItem onClick={(e) => { useStore.setState({ tableModalOpen: true }) }}>Edit</DropdownMenuItem>
+                        <DropdownMenuItem onClick={(e) => { useStore.setState({ tableModalOpen: true }) }}>Delete</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

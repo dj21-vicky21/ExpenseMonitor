@@ -7,7 +7,6 @@ import {
     getSortedRowModel,
     getFilteredRowModel,
     getPaginationRowModel,
-    VisibilityState
 } from "@tanstack/react-table"
 
 import {
@@ -26,18 +25,31 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
+
 import { Input } from "@/components/ui/input"
 import { rankItem } from "@tanstack/match-sorter-utils"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, SearchIcon } from "lucide-react"
+import { useStore } from "@/store"
+
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import Image from "next/image"
 
 
 export function DataTable({ columns, data, }) {
-
+    const { tableModalOpen } = useStore()
     const [sorting, setSorting] = React.useState([])
     const [globalFilter, setGlobalFilter] = React.useState([])
     const [columnVisibility, setColumnVisibility] = React.useState({})
-
 
     const fuzzyFilter = (row, columnId, value, addMeta) => {
         // Rank the item
@@ -123,7 +135,7 @@ export function DataTable({ columns, data, }) {
             </div>
 
             <div className="rounded-md border min-h-[585px]">
-                <Table  className={!table.getRowModel().rows?.length && 'h-[585px]' }>
+                <Table className={!table.getRowModel().rows?.length && 'h-[585px]'}>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
@@ -158,10 +170,18 @@ export function DataTable({ columns, data, }) {
                             ))
                         ) : (
                             <TableRow className="hover:bg-transparent">
-                                <TableCell colSpan={columns.length} className="text-center" >
-                                        <p className="text-lg font-extrabold mb-3"> No results found </p>
+                                <TableCell colSpan={columns.length} className="text-center " >
+                                   <div className="flex flex-col items-center justify-center w-full">
+                                   <Image
+                                        src={'/noResult.png'}
+                                        alt="My SVG"
+                                        width={200}
+                                        height={200}
+                                    />
+                                    <p className="text-lg font-extrabold mb-3"> No results found </p>
 
-                                        It seems we can’t find any results based on your search.
+                                    It seems we can’t find any results based on your search.
+                                   </div>
                                 </TableCell>
                             </TableRow>
                         )}
@@ -176,6 +196,21 @@ export function DataTable({ columns, data, }) {
                         <Button variant={'outline'} disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}><ChevronRight /></Button>
                     </>}
             </div>
+
+            <AlertDialog open={tableModalOpen} onOpenChange={(e) => { useStore.setState({ tableModalOpen: false }) }}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This action cannot be undone. This will permanently remove your data from our servers.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction>Continue</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     )
 }
