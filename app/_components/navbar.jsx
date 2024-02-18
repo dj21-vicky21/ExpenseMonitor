@@ -22,7 +22,7 @@ const Navbar = async () => {
 
     return <>
         <nav className="sticky top-0 z-10 rounded-md  border-b">
-            <div className="w-full  bg-opacity-50 backdrop-blur-md h-14 shadow-sm dark:shadow-none  px-4 md:px-12">
+            <div className="w-full  bg-opacity-50 backdrop-blur-sm h-14 shadow-sm dark:shadow-none  px-4 md:px-12">
                 <div className="flex items-center justify-between mx-auto h-full">
                     <Link href={'/home'}>Logo</Link>
                     {/* mobile side bar  */}

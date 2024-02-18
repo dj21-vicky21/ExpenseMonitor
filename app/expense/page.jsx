@@ -232,12 +232,12 @@ async function Expense() {
   const data = await getData()
 
   return (
-    <div className='md:border-l border-l-gray'>
+    <div className='md:border-l border-l-gray' style={{ minHeight: 'calc(100vh - 4rem)' }}>
       <div className='p-2 px-4 flex items-center border-b justify-between'>
         <p className=' font-bold'>Expense</p>
         <Button variant="secondary">Add</Button>
       </div>
-      <div className='p-2 max-w-7xl m-auto'>
+      <div className='p-2 max-w-7xl m-auto '>
         <DataTable columns={columns} data={data} />
       </div>
     </div>
