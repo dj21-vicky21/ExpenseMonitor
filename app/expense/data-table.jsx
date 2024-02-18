@@ -123,7 +123,7 @@ export function DataTable({ columns, data, }) {
             </div>
 
             <div className="rounded-md border min-h-[585px]">
-                <Table>
+                <Table  className={!table.getRowModel().rows?.length && 'h-[585px]' }>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
@@ -157,9 +157,11 @@ export function DataTable({ columns, data, }) {
                                 </TableRow>
                             ))
                         ) : (
-                            <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                            <TableRow className="hover:bg-transparent">
+                                <TableCell colSpan={columns.length} className="text-center" >
+                                        <p className="text-lg font-extrabold mb-3"> No results found </p>
+
+                                        It seems we can’t find any results based on your search.
                                 </TableCell>
                             </TableRow>
                         )}
