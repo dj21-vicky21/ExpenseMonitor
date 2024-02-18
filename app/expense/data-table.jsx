@@ -171,17 +171,17 @@ export function DataTable({ columns, data, }) {
                         ) : (
                             <TableRow className="hover:bg-transparent">
                                 <TableCell colSpan={columns.length} className="text-center " >
-                                   <div className="flex flex-col items-center justify-center w-full">
-                                   <Image
-                                        src={'/noResult.png'}
-                                        alt="My SVG"
-                                        width={200}
-                                        height={200}
-                                    />
-                                    <p className="text-lg font-extrabold mb-3"> No results found </p>
+                                    <div className="flex flex-col items-center justify-center w-full">
+                                        <Image
+                                            src={'/noResult.png'}
+                                            alt="My SVG"
+                                            width={200}
+                                            height={200}
+                                        />
+                                        <p className="text-lg font-extrabold mb-3"> No results found </p>
 
-                                    It seems we can’t find any results based on your search.
-                                   </div>
+                                        It seems we can’t find any results based on your search.
+                                    </div>
                                 </TableCell>
                             </TableRow>
                         )}
