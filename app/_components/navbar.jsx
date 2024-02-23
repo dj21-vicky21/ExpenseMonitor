@@ -5,6 +5,7 @@ import { authOptions } from "../api/auth/utils/authOptions";
 import Link from "next/link";
 import {
     Sheet,
+    SheetClose,
     SheetContent,
     SheetDescription,
     SheetHeader,
@@ -33,6 +34,7 @@ const Navbar = async () => {
                                 <SheetHeader>
                                     <SheetTitle className="text-start">Expense Tracking</SheetTitle>
                                     <SheetDescription>
+                                    <SheetClose asChild>
                                         <div className='h-full flex gap-y-3 flex-col justify-between'>
                                             <Sidebar />
                                             <div className='flex flex-col gap-1 border-t pt-5'>
@@ -40,6 +42,7 @@ const Navbar = async () => {
                                                 <LogoutBtn className={'relative flex mb-2 cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground'} />
                                             </div>
                                         </div>
+                                        </SheetClose>
                                     </SheetDescription>
                                 </SheetHeader>
                             </SheetContent>

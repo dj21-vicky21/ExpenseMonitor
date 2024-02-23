@@ -25,7 +25,7 @@ export default function Profile({ params }) {
 
     return (
         <div className="h-full flex items-center justify-center bg-gray-200/90 dark:bg-slate-900">
-            <div className="w-full bg-white dark:bg-slate-700/50 p-10 md:w-4/5 lg:w-1/2  shadow-sm rounded-lg">
+            <div className="w-full bg-white dark:bg-slate-700/50 p-5 md:p-10 md:w-4/5 lg:w-1/2  shadow-sm rounded-lg">
                 {session?.user?.name && <>
                     <div className="flex mb-12">
                         <Image id='photo' src={session?.user?.image} width={75} height={75} className="rounded-full cursor-pointer" alt="profile" />
