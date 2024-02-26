@@ -16,9 +16,9 @@ const UserProfile = ({ user }) => {
                 <UserAvatar name={user?.name} image={user.image} />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <div className="px-4 py-5 border-b mb-1">
+                <div className="px-4 pl-2 py-5 border-b mb-1">
                     <div className="flex gap-3 ">
-                        <UserAvatar name={user?.name} image={user.image} className={'w-10 h-10 shadow'} />
+                        {/* <UserAvatar name={user?.name} image={user.image} className={'w-10 h-10 shadow'} /> */}
                         <div className="flex flex-col ">
                             <p className="font-semibold">{user?.name}</p>
                             <p className="text-xs mt-1">{user?.email}</p>
