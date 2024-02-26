@@ -1,9 +1,9 @@
-// import ClientProviders from "./providers/ClientProvider";
+import ClientProviders from "./providers/ClientProvider";
 import { ThemeProvider } from "./providers/theme-provider";
 
 const Providers = ({ children }) => {
     return (<>
-        {/* <ClientProviders> */}
+        <ClientProviders>
             <ThemeProvider
                 attribute="class"
                 defaultTheme="system"
@@ -12,7 +12,7 @@ const Providers = ({ children }) => {
             >
                 {children}
             </ThemeProvider>
-        {/* </ClientProviders> */}
+        </ClientProviders>
     </>);
 }
 
