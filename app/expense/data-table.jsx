@@ -1,51 +1,19 @@
 "use client"
 import * as React from "react"
-import {
-    flexRender,
-    getCoreRowModel,
-    useReactTable,
-    getSortedRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-} from "@tanstack/react-table"
-
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-
-
-import { Input } from "@/components/ui/input"
-import { rankItem } from "@tanstack/match-sorter-utils"
-import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, SearchIcon } from "lucide-react"
-import { useStore } from "@/store"
-
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 import Image from "next/image"
+import { rankItem } from "@tanstack/match-sorter-utils"
+import { flexRender, getCoreRowModel, useReactTable, getSortedRowModel, getFilteredRowModel, getPaginationRowModel } from "@tanstack/react-table"
 
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { useStore } from "@/store"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, } from "@/components/ui/alert-dialog"
+import AddExpense from "@/components/addExpense"
 
-export function DataTable({ columns, data, }) {
+export function DataTable({ columns, data }) {
     const { tableModalOpen } = useStore()
     const [sorting, setSorting] = React.useState([])
     const [globalFilter, setGlobalFilter] = React.useState([])
@@ -54,12 +22,10 @@ export function DataTable({ columns, data, }) {
     const fuzzyFilter = (row, columnId, value, addMeta) => {
         // Rank the item
         const itemRank = rankItem(row.getValue(columnId), value)
-
         // Store the itemRank info
         addMeta({
             itemRank,
         })
-
         // Return if the item should be filtered in/out
         return itemRank.passed
     }
@@ -169,21 +135,37 @@ export function DataTable({ columns, data, }) {
                                 </TableRow>
                             ))
                         ) : (
-                            <TableRow className="hover:bg-transparent">
-                                <TableCell colSpan={columns.length} className="text-center " >
-                                    <div className="flex flex-col items-center justify-center w-full">
-                                        <Image
-                                            src={'/noResult.png'}
-                                            alt="My SVG"
-                                            width={200}
-                                            height={200}
-                                        />
-                                        <p className="text-lg font-extrabold mb-3"> No results found </p>
+                            !data.length ?
+                                <TableRow className="hover:bg-transparent">
+                                    <TableCell colSpan={columns.length} className="text-center " >
+                                        <div className="flex flex-col items-center justify-center w-full">
+                                            <Image
+                                                src={'/noResult.png'}
+                                                alt="My SVG"
+                                                width={200}
+                                                height={200}
+                                            />
+                                            <p className="text-lg font-extrabold mb-3">
+                                                <AddExpense />
+                                            </p>
+                                        </div>
+                                    </TableCell>
+                                </TableRow> :
+                                <TableRow className="hover:bg-transparent">
+                                    <TableCell colSpan={columns.length} className="text-center " >
+                                        <div className="flex flex-col items-center justify-center w-full">
+                                            <Image
+                                                src={'/noResult.png'}
+                                                alt="My SVG"
+                                                width={200}
+                                                height={200}
+                                            />
+                                            <p className="text-lg font-extrabold mb-3"> No results found </p>
 
-                                        It seems we can’t find any results based on your search.
-                                    </div>
-                                </TableCell>
-                            </TableRow>
+                                            It seems we can’t find any results based on your search.
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
                         )}
                     </TableBody>
                 </Table>
