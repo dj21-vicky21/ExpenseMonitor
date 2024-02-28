@@ -78,8 +78,8 @@ function AddExpense() {
 
     return (
         <>
-            <Dialog>
-                <DialogTrigger>Open</DialogTrigger>
+            <Button variant="secondary" onClick={(e) => openmodal()}>Add</Button>
+            <Dialog open={AddExpenseModalOpen} onOpenChange={() => useStore.setState({ AddExpenseModalOpen: !AddExpenseModalOpen })}>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className={'flex gap-3 items-center'}><Image src={'./money.svg'} width={30} height={30} alt="icon" /> New Expense</DialogTitle>
