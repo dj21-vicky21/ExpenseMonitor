@@ -82,3 +82,7 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+.remove-spin-apperance {
+  @apply [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+}

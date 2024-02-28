@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import React from 'react'
 import { DataTable } from './data-table'
 import { columns } from './column'
+import AddExpense from '@/components/addExpense'
 
 async function getData() {
   return [
@@ -223,19 +224,18 @@ async function getData() {
       "currency_sign": "INR"
     }
   ]
-
 }
 
 
-async function Expense() {
+const Expense = () => {
 
-  const data = await getData()
+  const data = getData()
 
   return (
-    <div className='md:border-l border-l-gray' style={{ minHeight: 'calc(100vh - 4rem)' }}>
+    <div className='md:border-l border-l-gray' >
       <div className='p-2 px-4 flex items-center border-b justify-between'>
         <p className=' font-bold'>Expense</p>
-        <Button variant="secondary">Add</Button>
+        <AddExpense />
       </div>
       <div className='p-2 max-w-7xl m-auto '>
         <DataTable columns={columns} data={data} />

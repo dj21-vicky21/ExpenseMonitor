@@ -146,7 +146,7 @@ export function DataTable({ columns, data }) {
                                                 height={200}
                                             />
                                             <p className="text-lg font-extrabold mb-3">
-                                                <AddExpense />
+                                                <Button variant="secondary" onClick={() => useStore.setState({ AddExpenseModalOpen: true })}>Add</Button>
                                             </p>
                                         </div>
                                     </TableCell>
