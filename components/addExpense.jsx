@@ -2,16 +2,6 @@
 
 import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
 import { Textarea } from "@/components/ui/textarea"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -38,6 +28,15 @@ import {
 } from "@/components/ui/popover"
 import Image from 'next/image'
 import { useStore } from '@/store'
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
 
 
 function AddExpense() {
@@ -79,16 +78,12 @@ function AddExpense() {
 
     return (
         <>
-            <div>
-                <Button variant="secondary" onClick={openmodal}>Add</Button>
-            </div>
-            <AlertDialog open={AddExpenseModalOpen} onOpenChange={() => useStore.setState({ AddExpenseModalOpen: false })}>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                        <AlertDialogTitle className="flex gap-2 items-center">
-                            <Image src={'./money.svg'} width={30} height={30} alt="icon" /> New Expense
-                        </AlertDialogTitle>
-                        <AlertDialogDescription className="mt-8">
+            <Dialog>
+                <DialogTrigger>Open</DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle className={'flex gap-3 items-center'}><Image src={'./money.svg'} width={30} height={30} alt="icon" /> New Expense</DialogTitle>
+                        <DialogDescription>
                             <div className='mt-4'>
                                 <Form {...form} >
                                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -161,17 +156,15 @@ function AddExpense() {
                                                 )}
                                             />
                                         </div>
-                                        <AlertDialogFooter>
-                                            <Button type="button" onClick={openmodal} variant="gost">Cancel</Button>
-                                            <Button type="submit">Add</Button>
-                                        </AlertDialogFooter>
+                                        <Button type="submit">Add</Button>
                                     </form>
                                 </Form>
                             </div>
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                </AlertDialogContent>
-            </AlertDialog>
+                        </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+            </Dialog>
+
         </>
     )
 }
