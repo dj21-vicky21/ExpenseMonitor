@@ -46,7 +46,7 @@ function AddExpense() {
     const formSchema = z.object({
         description: z.string()
             .min(2, { message: "Description must be at least 2 characters long." })
-            .max(50, { message: "Description must not exceed 50 characters." }),
+            .max(125, { message: "Description must not exceed 125 characters." }),
         amount: z.number()
             .positive({ message: "Amount must be greater than 0." }) // Ensures amount is a positive number, implicitly greater than 0
             .gt(0, { message: "Amount must be greater than 0." }), // Explicitly ensures amount is greater than 0
@@ -94,7 +94,7 @@ function AddExpense() {
                                                 <FormItem>
                                                     <FormLabel>Description</FormLabel>
                                                     <FormControl>
-                                                        <Textarea placeholder="Savings" {...field} />
+                                                        <Textarea  className="resize-none" placeholder="Savings" {...field} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
