@@ -14,7 +14,7 @@ function RedirectLink({ className }) {
     }
 
     return (
-        <div className={cn('flex gap-1 w-full px-2 py-1.5', className)} onClick={onclick}>
+        <div className={cn('flex items-center gap-1 w-full px-2 py-1.5', className)} onClick={onclick}>
             <User size={14} /> Profile
         </div>
     )
