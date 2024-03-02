@@ -15,11 +15,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={cn("flex h-full flex-col",inter.className)}>
+      <body className={inter.className}>
         <Providers>
-          <Navbar/>
-          {children}<Toaster />
+          <div className="flex h-full flex-col">
+            <div style={{height:"54px"}}>
+              <Navbar />
+            </div>
+            <div style={{height:"calc(100% - 54px"}}>
+              {children}
+            </div>
+          </div>
         </Providers>
+        <Toaster />
       </body>
     </html>
   );

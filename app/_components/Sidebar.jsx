@@ -23,7 +23,7 @@ function Sidebar({ className }) {
 
     return (
         <div className={cn('md:w-80', className)}>
-            <div className='sticky top-[70px] '>
+            <div>
                 {menu.map((menu, index) =>
                     <Button key={index} variant="secondary" onClick={(e) => handlerChangePage(menu.link)} className={cn("gap-3 w-full justify-start mb-1 text-[hsl(var(--muted-foreground))] ", currentPage === menu.link && "bg-secondary/80 text-[hsl(var(--accent-foreground))]")}>
                         {menu.icon} {menu.name}

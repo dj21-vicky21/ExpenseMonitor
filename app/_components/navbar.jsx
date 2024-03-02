@@ -16,13 +16,14 @@ import LogoutBtn from '@/components/auth/logOutBtn'
 import RedirectLink from '../_components/redirectLink'
 import Sidebar from "./Sidebar";
 import { MenuIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const Navbar = async () => {
+const Navbar = async ({className}) => {
 
     const session = await getServerSession(authOptions)
 
     return <>
-        <nav className="sticky top-0 z-10 rounded-md  border-b">
+        <nav className={cn("top-0 z-10 rounded-md  border-b",className)}>
             <div className="w-full  bg-opacity-50 backdrop-blur-sm h-14 shadow-sm dark:shadow-none  px-4 md:px-12">
                 <div className="flex items-center justify-between mx-auto h-full">
                     <Link href={'/home'}>Logo</Link>
