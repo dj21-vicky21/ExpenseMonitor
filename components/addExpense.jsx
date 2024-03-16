@@ -98,7 +98,7 @@ function AddExpense() {
                                             control={form.control}
                                             name="description"
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="text-start">
                                                     <FormLabel>Description</FormLabel>
                                                     <FormControl>
                                                         <Textarea className="resize-none" placeholder="Savings" {...field} />
@@ -107,9 +107,9 @@ function AddExpense() {
                                                 </FormItem>
                                             )}
                                         />
-                                        <div className='flex gap-3'>
-                                            <div className='flex flex-col gap-4'>
-                                                <Label>Amount</Label>
+                                        <div className='flex gap-3 flex-col sm:flex-row  '>
+                                            <div className='flex flex-col gap-3 mt-[3px] '>
+                                                <Label className="text-start">Amount</Label>
                                                 <div className='flex'>
                                                     <FormField
                                                         control={form.control}
@@ -133,15 +133,14 @@ function AddExpense() {
                                                             </>
                                                         )}
                                                     />
-                                                    <FormField
+                                                    <FormField 
                                                         control={form.control}
                                                         name="amount"
                                                         render={({ field }) => (
                                                             <>
-                                                                <FormItem>
+                                                                <FormItem className="w-full">
                                                                     <FormControl>
-
-                                                                        <Input {...field} className={'remove-spin-apperance focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none rounded-r-md '} />
+                                                                        <Input {...field} className={'w-full remove-spin-apperance focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none rounded-r-md '} />
                                                                     </FormControl>
                                                                     <FormMessage />
                                                                 </FormItem>
@@ -154,7 +153,7 @@ function AddExpense() {
                                                 control={form.control}
                                                 name="date"
                                                 render={({ field }) => (
-                                                    <FormItem >
+                                                    <FormItem className="flex flex-col sm:block items-start w-full sm:w-auto">
                                                         <FormLabel>Date </FormLabel>
                                                         <Popover>
                                                             <PopoverTrigger asChild>
@@ -162,7 +161,7 @@ function AddExpense() {
                                                                     <Button
                                                                         variant={"outline"}
                                                                         className={cn(
-                                                                            "w-[240px] pl-3 text-left font-normal",
+                                                                            "w-full sm:w-[240px] pl-3 text-left font-normal",
                                                                             !field.value && "text-muted-foreground"
                                                                         )}
                                                                     >
