@@ -30,10 +30,20 @@ export const authOptions = {
     ],
     secret: process.env.NEXTAUTH_SECRET,
     session: {
-        strategy: "jwt"
+        strategy: "jwt",
+        maxAge: 7 * 24 * 60 * 60
+    },
+    callbacks: {
+        session: async ({ session, token }) => {
+            if (session?.user) {
+                session.user.id = token.sub;// token.uid or token.sub both work
+            }
+            return session;
+        },
+        
+        
     },
     pages: {
         signIn: "/auth/signin"
-    }
-
+    },
 }
