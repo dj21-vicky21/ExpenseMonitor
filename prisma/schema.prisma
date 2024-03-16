@@ -60,6 +60,7 @@ model Expenses {
   id                String   @id @default(cuid())
   title             String
   short_description String
+  currency          String
   type              String
   expense_date      DateTime
   createdAt         DateTime @default(now())
