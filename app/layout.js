@@ -3,7 +3,6 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import Providers from "@/components/providers";
 import Navbar from "./_components/navbar";
-import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,13 +14,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning={true}>
         <Providers>
           <div className="flex h-full flex-col">
-            <div style={{height:"54px"}}>
+            <div className="h[54px]">
               <Navbar />
             </div>
-            <div style={{height:"calc(100% - 54px"}}>
+            <div className={'h-body'} >
               {children}
             </div>
           </div>
