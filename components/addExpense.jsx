@@ -9,7 +9,6 @@ import { z } from "zod"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -35,8 +34,9 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
+import { Label } from './ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 
 
 function AddExpense() {
@@ -47,9 +47,10 @@ function AddExpense() {
         description: z.string()
             .min(2, { message: "Description must be at least 2 characters long." })
             .max(125, { message: "Description must not exceed 125 characters." }),
-        amount: z.number()
-            .positive({ message: "Amount must be greater than 0." }) // Ensures amount is a positive number, implicitly greater than 0
-            .gt(0, { message: "Amount must be greater than 0." }), // Explicitly ensures amount is greater than 0
+        amount: z.string()
+            .refine((val) => val !== "", { message: "Enter the amount" }) // Checks if the string is not empty
+            .refine((val) => !isNaN(parseFloat(val)) && isFinite(val), { message: "Enter number only" }),
+        currency: z.string().regex(/^(INR|USD)$/, { message: "Invalid currency code." }),
         date: z.date({
             required_error: "A date is required.",
         }),
@@ -60,7 +61,8 @@ function AddExpense() {
         resolver: zodResolver(formSchema),
         defaultValues: {
             description: "",
-            amount: Number(""),
+            amount: "",
+            currency: "INR",
             date: new Date()
         },
     })
@@ -76,10 +78,15 @@ function AddExpense() {
         useStore.setState({ AddExpenseModalOpen: !AddExpenseModalOpen })
     }
 
+    const closeModal = () => {
+        form.reset()
+        useStore.setState({ AddExpenseModalOpen: !AddExpenseModalOpen })
+    }
+
     return (
         <>
             <Button variant="secondary" onClick={(e) => openmodal()}>Add</Button>
-            <Dialog open={AddExpenseModalOpen} onOpenChange={() => useStore.setState({ AddExpenseModalOpen: !AddExpenseModalOpen })}>
+            <Dialog open={AddExpenseModalOpen} onOpenChange={closeModal}>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className={'flex gap-3 items-center'}><Image src={'./money.svg'} width={30} height={30} alt="icon" /> New Expense</DialogTitle>
@@ -94,26 +101,55 @@ function AddExpense() {
                                                 <FormItem>
                                                     <FormLabel>Description</FormLabel>
                                                     <FormControl>
-                                                        <Textarea  className="resize-none" placeholder="Savings" {...field} />
+                                                        <Textarea className="resize-none" placeholder="Savings" {...field} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
                                         <div className='flex gap-3'>
-                                            <FormField
-                                                control={form.control}
-                                                name="amount"
-                                                render={({ field }) => (
-                                                    <FormItem>
-                                                        <FormLabel>Amount</FormLabel>
-                                                        <FormControl>
-                                                            <Input className={'remove-spin-apperance'} placeholder="00.00" type="number" {...field} onChange={event => field.onChange(+event.target.value)} />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
+                                            <div className='flex flex-col gap-4'>
+                                                <Label>Amount</Label>
+                                                <div className='flex'>
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="currency"
+                                                        render={({ field }) => (
+                                                            <>
+                                                                <FormItem>
+                                                                    <FormControl>
+                                                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                                            <SelectTrigger className="w-[50px] rounded-none rounded-l-md focus:ring-0 focus:ring-offset-0" >
+                                                                                <SelectValue placeholder="Currency" {...field} />
+                                                                            </SelectTrigger>
+                                                                            <SelectContent>
+                                                                                <SelectItem value={"INR"}>₹</SelectItem>
+                                                                                <SelectItem value={"USD"}>$</SelectItem>
+                                                                            </SelectContent>
+                                                                        </Select>
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            </>
+                                                        )}
+                                                    />
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="amount"
+                                                        render={({ field }) => (
+                                                            <>
+                                                                <FormItem>
+                                                                    <FormControl>
+
+                                                                        <Input {...field} className={'remove-spin-apperance focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none rounded-r-md '} />
+                                                                    </FormControl>
+                                                                    <FormMessage />
+                                                                </FormItem>
+                                                            </>
+                                                        )}
+                                                    />
+                                                </div>
+                                            </div>
                                             <FormField
                                                 control={form.control}
                                                 name="date"
@@ -145,7 +181,7 @@ function AddExpense() {
                                                                     selected={field.value}
                                                                     onSelect={field.onChange}
                                                                     disabled={(date) =>
-                                                                        date > new Date() || date < new Date("1900-01-01")
+                                                                        date < new Date("1900-01-01")
                                                                     }
                                                                     initialFocus
                                                                 />
