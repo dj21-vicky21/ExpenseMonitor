@@ -226,13 +226,12 @@ async function getData() {
   ]
 }
 
-
 const Expense = () => {
 
   const data = getData()
 
   return (
-    <div className='md:border-l border-l-gray' >
+    <div className='h-full' >
       <div className='p-2 px-4 flex items-center border-b justify-between'>
         <p className=' font-bold'>Expense</p>
         <AddExpense />

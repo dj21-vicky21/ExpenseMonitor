@@ -59,7 +59,7 @@ export const columns = [
     },
     {
         accessorKey: "description",
-        header: ({ column }) => sorting(column, "Description")
+        header:  "Description"
     },
     {
         accessorKey: "amount",
