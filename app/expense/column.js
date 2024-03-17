@@ -59,7 +59,7 @@ export const columns = [
     },
     {
         accessorKey: "description",
-        header:  "Description"
+        header: "Description"
     },
     {
         accessorKey: "amount",
@@ -68,10 +68,10 @@ export const columns = [
             const amount = parseFloat(row.getValue("amount"))
             const formatted = new Intl.NumberFormat("en-US", {
                 style: "currency",
-                currency: "INR",
+                currency: row.original.currency_sign,
             }).format(amount)
 
-            return <div className="text-left font-medium">{formatted}</div>
+            return <>{formatted}</>
         },
     },
     {
