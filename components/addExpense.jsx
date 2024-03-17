@@ -1,11 +1,10 @@
 "use client"
 
-import React, { useState } from 'react'
+import React from 'react'
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import {
     Form,
     FormControl,
@@ -37,28 +36,16 @@ import {
 } from "@/components/ui/dialog"
 import { Label } from './ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
-
+import axios from 'axios'
+import { addExpenseSchema } from '@/schema/schema'
+import { toast } from './ui/use-toast'
 
 function AddExpense() {
-
     const { AddExpenseModalOpen } = useStore()
-
-    const formSchema = z.object({
-        description: z.string()
-            .min(2, { message: "Description must be at least 2 characters long." })
-            .max(125, { message: "Description must not exceed 125 characters." }),
-        amount: z.string()
-            .refine((val) => val !== "", { message: "Enter the amount" }) // Checks if the string is not empty
-            .refine((val) => !isNaN(parseFloat(val)) && isFinite(val), { message: "Enter number only" }),
-        currency: z.string().regex(/^(INR|USD)$/, { message: "Invalid currency code." }),
-        date: z.date({
-            required_error: "A date is required.",
-        }),
-    });
 
     // 1. Define your form.
     const form = useForm({
-        resolver: zodResolver(formSchema),
+        resolver: zodResolver(addExpenseSchema),
         defaultValues: {
             description: "",
             amount: "",
@@ -67,11 +54,41 @@ function AddExpense() {
         },
     })
 
+    const addExpense = async (expenseDetails) => {
+        try {
+            let config = {
+                method: 'post',
+                url: 'http://localhost:3000/api/expense',
+                data: JSON.stringify(expenseDetails),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            const data = await axios(config)
+            toast({
+                title: "Successfully!",
+                description: "Your record successfully stored!",
+                variant: "success",
+            })
+        } catch (error) {
+            console.error(error.response)
+            toast({
+                title: "Successfully created!",
+                description: "destructive",
+            })
+        } finally {
+            closeModal()
+        }
+
+    }
+
     // 2. Define a submit handler.
     function onSubmit(values) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values)
+        addExpense(values)
     }
 
     const openmodal = () => {
@@ -133,12 +150,12 @@ function AddExpense() {
                                                             </>
                                                         )}
                                                     />
-                                                    <FormField 
+                                                    <FormField
                                                         control={form.control}
                                                         name="amount"
                                                         render={({ field }) => (
                                                             <>
-                                                                <FormItem className="w-full">
+                                                                <FormItem className="w-full text-start">
                                                                     <FormControl>
                                                                         <Input {...field} className={'w-full remove-spin-apperance focus-visible:ring-0 focus-visible:ring-offset-0 rounded-none rounded-r-md '} />
                                                                     </FormControl>
@@ -191,7 +208,9 @@ function AddExpense() {
                                                 )}
                                             />
                                         </div>
-                                        <Button type="submit">Add</Button>
+                                        <div className='flex'>
+                                            <Button type="submit">Add</Button>
+                                        </div>
                                     </form>
                                 </Form>
                             </div>
