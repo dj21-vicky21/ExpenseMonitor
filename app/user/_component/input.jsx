@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
-import React, { useState } from 'react'
+import React from 'react'
 
 function UserInput({ className, label, type, disabled, defaultvalue }) {
 

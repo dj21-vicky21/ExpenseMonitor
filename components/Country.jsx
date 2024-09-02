@@ -30,7 +30,7 @@ function CountryDetails({ defaultValue }) {
                 <SelectValue defaultValue={defaultValue} placeholder="Country" />
             </SelectTrigger>
             <SelectContent>
-                {countryOptions?.length && countryOptions?.map(country => <SelectItem value={country}>{country.name}</SelectItem>)}
+                {countryOptions?.length && countryOptions?.map(country => <SelectItem key={country.name} value={country}>{country.name}</SelectItem>)}
             </SelectContent>
         </Select>
     )

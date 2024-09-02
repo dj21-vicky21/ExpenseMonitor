@@ -8,11 +8,11 @@ import {
 } from "@/components/ui/select"
 
 
-function Select() {
+function SelectTheme() {
   return (
     <Select>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="ssss" />
+        <SelectValue placeholder="Dark" />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="test">Light</SelectItem>
@@ -24,4 +24,4 @@ function Select() {
   )
 }
 
-export default Select
+export default SelectTheme

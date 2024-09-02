@@ -42,7 +42,7 @@ export default function Profile({ params }) {
                         <UserInput label="Name" type='text' defaultvalue={session?.user?.name} />
                         <UserInput label="Email" type='email' defaultvalue={session?.user?.email} disabled />
                         <UserInput label="Phone" type='number' />
-                        <Select label="Currency sign" type='text' />
+                        {/* <Select label="Currency sign" type='text' /> */}
                         <Separator />
                         <div id='address' className="grid grid-cols-2 gap-3">
                             <div className="">
