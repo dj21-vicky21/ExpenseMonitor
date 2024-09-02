@@ -40,29 +40,29 @@ import axios from 'axios'
 import { addExpenseSchema } from '@/schema/schema'
 import { toast } from './ui/use-toast'
 
-function AddExpense() {
-    const { AddExpenseModalOpen } = useStore()
+function UpdateExpense({ expenseData }) {
+    const { UpdateExpenseModalOpen } = useStore()
 
     // 1. Define your form.
     const form = useForm({
         resolver: zodResolver(addExpenseSchema),
         defaultValues: {
-            description: "",
-            amount: "",
-            currency: "INR",
-            date: new Date()
+            description: expenseData.description,
+            amount: expenseData.amount,
+            currency: expenseData.currency_sign,
+            date: new Date(expenseData.date)
         },
     })
 
-    const addExpense = async (expenseDetails) => {
+    const updateExpense = async (expenseDetails) => {
         try {
             let config = {
-                method: 'post',
-                url: `${process.env.NEXT_PUBLIC_URL}/api/expense`,
-                data: JSON.stringify(expenseDetails),
+                method: 'PUT',
+                url: `${process.env.NEXT_PUBLIC_URL}/api/expense/${expenseData.id}`,
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                data: JSON.stringify(expenseDetails),
             };
 
             const data = await axios(config)
@@ -71,42 +71,39 @@ function AddExpense() {
                 description: "Your record successfully stored!",
                 variant: "success",
             })
+            closeModal()
         } catch (error) {
             console.error(error.response)
             toast({
                 title: "Something went wrong!",
                 description: "Please try again",
+                variant: "destructive"
             })
-        } finally {
-            closeModal()
         }
 
     }
 
-    // 2. Define a submit handler.
     function onSubmit(values) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
         console.log(values)
-        addExpense(values)
+        updateExpense(values)
     }
 
-    const openmodal = () => {
-        useStore.setState({ AddExpenseModalOpen: !AddExpenseModalOpen })
-    }
+    // const openmodal = () => {
+    //     useStore.setState({ UpdateExpenseModalOpen: !UpdateExpenseModalOpen })
+    // }
 
     const closeModal = () => {
         form.reset()
-        useStore.setState({ AddExpenseModalOpen: !AddExpenseModalOpen })
+        useStore.setState({ UpdateExpenseModalOpen: !UpdateExpenseModalOpen })
     }
 
     return (
         <>
-            <Button variant="secondary" onClick={(e) => openmodal()}>Add</Button>
-            <Dialog open={AddExpenseModalOpen} onOpenChange={closeModal}>
+            {/* <Button variant="secondary" className="w-full" onClick={(e) => openmodal()}>Edit</Button> */}
+            <Dialog open={UpdateExpenseModalOpen} onOpenChange={closeModal}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle className={'flex gap-3 items-center'}><Image src={'./money.svg'} width={30} height={30} alt="icon" /> New Expense</DialogTitle>
+                        <DialogTitle className={'flex gap-3 items-center'}><Image src={'./money.svg'} width={30} height={30} alt="icon" /> Update Expense</DialogTitle>
                         <DialogDescription>
                             <div className='mt-4'>
                                 <Form {...form} >
@@ -218,9 +215,8 @@ function AddExpense() {
                     </DialogHeader>
                 </DialogContent>
             </Dialog>
-
         </>
     )
 }
 
-export default AddExpense
+export default UpdateExpense

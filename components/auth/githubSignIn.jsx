@@ -15,7 +15,7 @@ export default function GithubSignIn() {
         try {
             setLoading(true)
             await signIn("github", {
-                callbackUrl: `${window.location.origin}/home`
+                callbackUrl: `${window.location.origin}/expense`
             })
         } catch (error) {
             return toast({

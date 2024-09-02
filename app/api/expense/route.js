@@ -51,3 +51,12 @@ export async function POST(req, res) {
     }
 }
 
+// export async function GET(req, res) {
+//     const token = await getToken({ req })
+//     if (!token) return NextResponse.json({ Error: "Unauthorized!" }, { status: 401 })
+
+//     const userId = token.sub
+
+//     return NextResponse.json({ Message: "Method not allowed" }, { status: 405 })
+
+// }

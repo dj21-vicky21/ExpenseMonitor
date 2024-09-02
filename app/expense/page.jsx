@@ -1,4 +1,5 @@
-import { Button } from '@/components/ui/button'
+"use server"
+
 import React from 'react'
 import { DataTable } from './data-table'
 import { columns } from './column'
@@ -7,16 +8,15 @@ import prisma from '../api/auth/utils/db'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '../api/auth/utils/authOptions'
 
+const session = await getServerSession(authOptions)
+
+export const getExpense = async () => {
+  const data = await prisma.expenses.findMany({ where: { userId: session.user.id } })
+  return data
+}
 
 const Expense = async () => {
 
-  const session = await getServerSession(authOptions)
-
-  const getExpense = async () => {
-    const data = await prisma.expenses.findMany({ where: { userId: session.user.id } })
-    return data
-  }
- 
   const data = await getExpense()
 
   const currencyCodewithAmount = (currencyCode, amount) => {

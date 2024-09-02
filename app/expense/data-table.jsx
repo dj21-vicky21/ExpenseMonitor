@@ -11,10 +11,13 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useStore } from "@/store"
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, } from "@/components/ui/alert-dialog"
-import AddExpense from "@/components/addExpense"
+import { toast } from "@/components/ui/use-toast"
+import axios from "axios"
+import UpdateExpense from "@/components/UpdateExpense"
+
 
 export function DataTable({ columns, data }) {
-    const { tableModalOpen } = useStore()
+    const { tableModalOpen, expenseData } = useStore()
     const [sorting, setSorting] = React.useState([])
     const [globalFilter, setGlobalFilter] = React.useState([])
     const [columnVisibility, setColumnVisibility] = React.useState({})
@@ -54,6 +57,39 @@ export function DataTable({ columns, data }) {
     React.useEffect(() => {
         table.setPageSize(15);
     }, [])
+
+    const closeModal = (e) => {
+        useStore.setState({ tableModalOpen: false })
+    }
+
+    const deleteExpense = async () => {
+        try {
+            let config = {
+                method: 'DELETE',
+                url: `${process.env.NEXT_PUBLIC_URL}/api/expense/${expenseData.id}`,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            };
+            console.log("🚀 ~ deleteExpense ~ config:", config)
+
+            const data = await axios(config)
+            toast({
+                title: "Successfully!",
+                description: "Your record successfully deleted!",
+                variant: "success",
+            })
+            closeModal()
+        } catch (error) {
+            console.error(error)
+            toast({
+                title: "Something went wrong!",
+                description: "Please try again",
+                variant: "destructive"
+            })
+        }
+
+    }
 
     return (
         <div>
@@ -146,7 +182,7 @@ export function DataTable({ columns, data }) {
                                                 height={200}
                                             />
                                             <p className="text-lg font-extrabold mb-3">
-                                                <Button variant="secondary" onClick={() => useStore.setState({ AddExpenseModalOpen: true })}>Add</Button>
+                                                <Button variant="secondary" onClick={(e) => useStore.setState({ AddExpenseModalOpen: true })}>Add</Button> your first Expense!
                                             </p>
                                         </div>
                                     </TableCell>
@@ -178,8 +214,8 @@ export function DataTable({ columns, data }) {
                         <Button variant={'outline'} disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}><ChevronRight /></Button>
                     </>}
             </div>
-
-            <AlertDialog open={tableModalOpen} onOpenChange={(e) => { useStore.setState({ tableModalOpen: false }) }}>
+            {expenseData && <UpdateExpense expenseData={expenseData} />}
+            <AlertDialog open={tableModalOpen} onOpenChange={closeModal}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -189,7 +225,7 @@ export function DataTable({ columns, data }) {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction>Continue</AlertDialogAction>
+                        <AlertDialogAction onClick={() => deleteExpense()}>Delete</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

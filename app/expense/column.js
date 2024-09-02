@@ -11,7 +11,6 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Checkbox } from "@/components/ui/checkbox"
-
 import { useStore } from "@/store"
 
 
@@ -77,7 +76,7 @@ export const columns = [
     {
         id: "actions",
         cell: ({ row }) => {
-            const payment = row.original
+            const expenseData = row.original
 
             return (
                 <DropdownMenu>
@@ -88,14 +87,12 @@ export const columns = [
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        {/* <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(payment.id)}
-                        >
-                            Copy payment ID
-                        </DropdownMenuItem> */}
-                        {/* <DropdownMenuSeparator /> */}
-                        <DropdownMenuItem onClick={(e) => { useStore.setState({ tableModalOpen: true }) }}>Edit</DropdownMenuItem>
-                        <DropdownMenuItem onClick={(e) => { useStore.setState({ tableModalOpen: true }) }}>Delete</DropdownMenuItem>
+                        <DropdownMenuItem onClick={(e) => { useStore.setState({ UpdateExpenseModalOpen: true, expenseData: expenseData }) }}>
+                            Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={(e) => { useStore.setState({ tableModalOpen: true, expenseData: expenseData }) }} >
+                            Delete
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
