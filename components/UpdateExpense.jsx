@@ -58,7 +58,7 @@ function UpdateExpense({ expenseData }) {
         try {
             let config = {
                 method: 'PUT',
-                url: `${process.env.NEXT_PUBLIC_URL}/api/expense/${expenseData.id}`,
+                url: `/api/expense/${expenseData.id}`,
                 headers: {
                     'Content-Type': 'application/json'
                 },

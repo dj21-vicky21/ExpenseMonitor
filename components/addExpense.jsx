@@ -58,7 +58,7 @@ function AddExpense() {
         try {
             let config = {
                 method: 'post',
-                url: `${process.env.NEXT_PUBLIC_URL}/api/expense`,
+                url: `/api/expense`,
                 data: JSON.stringify(expenseDetails),
                 headers: {
                     'Content-Type': 'application/json'

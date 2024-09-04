@@ -66,7 +66,7 @@ export function DataTable({ columns, data }) {
         try {
             let config = {
                 method: 'DELETE',
-                url: `${process.env.NEXT_PUBLIC_URL}/api/expense/${expenseData.id}`,
+                url: `/api/expense/${expenseData.id}`,
                 headers: {
                     'Content-Type': 'application/json'
                 },
