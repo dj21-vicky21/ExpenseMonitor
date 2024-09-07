@@ -70,7 +70,7 @@ function UpdateExpense({ expenseData }) {
             const data = await axios(config)
             toast({
                 title: "Successfully!",
-                description: "Your record successfully stored!",
+                description: "You're Expense Successfully Updated!",
                 variant: "success",
             })
             closeModal()

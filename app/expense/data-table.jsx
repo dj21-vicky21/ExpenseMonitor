@@ -78,7 +78,7 @@ export function DataTable({ columns, data }) {
             const data = await axios(config)
             toast({
                 title: "Successfully!",
-                description: "Your record successfully deleted!",
+                description: "You're Expense Successfully Deleted!",
                 variant: "success",
             })
             closeModal()
@@ -185,8 +185,9 @@ export function DataTable({ columns, data }) {
                                                 width={200}
                                                 height={200}
                                             />
-                                            <p className="text-lg font-extrabold mb-3">
-                                                <Button variant="secondary" onClick={(e) => useStore.setState({ AddExpenseModalOpen: true })}>Add</Button> your first Expense!
+                                            <p className="text-sm font-extrabold mb-3 leading-5 tracking-widest">
+                                                To <span onClick={(e) => useStore.setState({ AddExpenseModalOpen: true })} className=" cursor-pointer hover:underline underline-offset-2" >add</span> you're first expense
+                                                {/* <Button variant="secondary" >Add</Button> */}
                                             </p>
                                         </div>
                                     </TableCell>

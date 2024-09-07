@@ -70,7 +70,7 @@ function AddExpense() {
             const data = await axios(config)
             toast({
                 title: "Successfully!",
-                description: "Your record successfully stored!",
+                description: "You're Expense Successfully Stored!",
                 variant: "success",
             })
             closeModal()
