@@ -3,12 +3,21 @@ const { PrismaClient } = require('@prisma/client');
 let prisma;
 
 if (process.env.NODE_ENV === 'production') {
-  // In production, we create a new instance of PrismaClient for each request
   prisma = new PrismaClient({
     log: ['query', 'info', 'warn', 'error'],
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL,
+      },
+    },
+    // Connection pooling settings
+    datasources: {
+      db: {
+        url: process.env.DATABASE_URL + '?connection_limit=5',
+      },
+    },
   });
 } else {
-  // In development, we use a global variable to reuse the PrismaClient instance
   if (!global.prisma) {
     global.prisma = new PrismaClient({
       log: ['query', 'info', 'warn', 'error'],
