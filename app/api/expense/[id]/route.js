@@ -64,7 +64,6 @@ export async function PUT(req, context) {
         const validation = await addExpenseSchemaServer.parse(data);
 
         await updateExpense(data, params.id)
-        console.info("update done")
 
         return NextResponse.json({ Message: "Successfully record updated!" }, { status: 200 })
     } catch (error) {
@@ -88,8 +87,6 @@ export async function DELETE(req, context) {
         if (!userId) return NextResponse.json({ message: "Unauthorized!" }, { status: 401 })
 
         await deleteExpense(params.id)
-        console.info("delete done")
-
 
         return NextResponse.json({ Message: "Successfully record deleted!" }, { status: 200 })
     } catch (error) {

@@ -38,7 +38,7 @@ export async function POST(req, res) {
         const validation = await addExpenseSchemaServer.parse(data);
         const userId = token.sub
 
-        createExpense(data, userId)
+        await createExpense(data, userId)
 
         return NextResponse.json({ Message: "Successfully added your record!" }, { status: 201 })
     } catch (error) {

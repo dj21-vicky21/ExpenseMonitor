@@ -42,6 +42,7 @@ import { toast } from './ui/use-toast'
 
 function UpdateExpense({ expenseData }) {
     const { UpdateExpenseModalOpen } = useStore()
+    const [isload, setIsload] = React.useState(false)
 
     // 1. Define your form.
     const form = useForm({
@@ -56,6 +57,7 @@ function UpdateExpense({ expenseData }) {
 
     const updateExpense = async (expenseDetails) => {
         try {
+            setIsload(true)
             let config = {
                 method: 'PUT',
                 url: `/api/expense/${expenseData.id}`,
@@ -79,6 +81,8 @@ function UpdateExpense({ expenseData }) {
                 description: "Please try again",
                 variant: "destructive"
             })
+        } finally {
+            setIsload(false)
         }
 
     }
@@ -205,8 +209,8 @@ function UpdateExpense({ expenseData }) {
                                                 )}
                                             />
                                         </div>
-                                        <div className='flex'>
-                                            <Button type="submit">Add</Button>
+                                        <div className={cn('flex', isload && "pointer-events-none opacity-50")}>
+                                            <Button type="submit">Update</Button>
                                         </div>
                                     </form>
                                 </Form>

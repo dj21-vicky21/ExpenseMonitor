@@ -14,6 +14,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { toast } from "@/components/ui/use-toast"
 import axios from "axios"
 import UpdateExpense from "@/components/UpdateExpense"
+import { cn } from "@/lib/utils"
 
 
 export function DataTable({ columns, data }) {
@@ -21,6 +22,7 @@ export function DataTable({ columns, data }) {
     const [sorting, setSorting] = React.useState([])
     const [globalFilter, setGlobalFilter] = React.useState([])
     const [columnVisibility, setColumnVisibility] = React.useState({})
+    const [isload, setIsload] = React.useState(false)
 
     const fuzzyFilter = (row, columnId, value, addMeta) => {
         // Rank the item
@@ -64,6 +66,7 @@ export function DataTable({ columns, data }) {
 
     const deleteExpense = async () => {
         try {
+            setIsload(true)
             let config = {
                 method: 'DELETE',
                 url: `/api/expense/${expenseData.id}`,
@@ -71,7 +74,6 @@ export function DataTable({ columns, data }) {
                     'Content-Type': 'application/json'
                 },
             };
-            console.log("🚀 ~ deleteExpense ~ config:", config)
 
             const data = await axios(config)
             toast({
@@ -87,6 +89,8 @@ export function DataTable({ columns, data }) {
                 description: "Please try again",
                 variant: "destructive"
             })
+        } finally {
+            setIsload(false)
         }
 
     }
@@ -223,10 +227,12 @@ export function DataTable({ columns, data }) {
                             This action cannot be undone. This will permanently remove your data from our servers.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => deleteExpense()}>Delete</AlertDialogAction>
-                    </AlertDialogFooter>
+                    <div className={cn("", isload && "pointer-events-none opacity-50")}>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => deleteExpense()}>Delete</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </div>
                 </AlertDialogContent>
             </AlertDialog>
         </div>
