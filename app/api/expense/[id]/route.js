@@ -27,9 +27,11 @@ const updateExpense = async (payload, id) => {
             },
             data: data
         })
+        console.log("🚀 ~ updateExpense ~ updateExpense:", updateExpense)
         // console.log("addExpense", addExpense);
     } catch (error) {
-        throw new Error(error)
+        console.error(error)
+        throw error
     }
 }
 
@@ -40,8 +42,10 @@ const deleteExpense = async (id) => {
                 id
             }
         })
+        console.log("🚀 ~ deleteExpense ~ deletExpense:", deletExpense)
         // console.log("addExpense", addExpense);
     } catch (error) {
+        console.error(error)
         throw new Error(error)
     }
 }
