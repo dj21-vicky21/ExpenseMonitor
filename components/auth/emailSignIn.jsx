@@ -7,11 +7,11 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { toast } from "../ui/use-toast";
-import { Loader2Icon, LoaderIcon } from "lucide-react";
+import { LoaderIcon } from "lucide-react";
 
 const EmailSignIn = () => {
     const [email, setEmail] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
     const signInEmail = async () => {
@@ -39,12 +39,11 @@ const EmailSignIn = () => {
                 description: "A magic link has been sent to email"
             })
         } catch (error) {
+            setLoading(false)
             return toast({
                 title: "check your email",
                 description: "A magic link has been sent to email"
             })
-        } finally {
-            setLoading(false)
         }
     }
 

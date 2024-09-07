@@ -19,13 +19,12 @@ export default function GoogleSignIn() {
                 callbackUrl: `${window.location.origin}/expense`
             })
         } catch (error) {
+            setLoading(false)
             return toast({
                 title: "well this did not work...",
                 description: "something went wrong, please try again",
                 variant: "destructive"
             })
-        } finally {
-            setLoading(false)
         }
     }
 
