@@ -15,6 +15,7 @@ import { toast } from "@/components/ui/use-toast"
 import axios from "axios"
 import UpdateExpense from "@/components/UpdateExpense"
 import { cn } from "@/lib/utils"
+import { useRouter } from 'next/navigation'
 
 
 export function DataTable({ columns, data }) {
@@ -23,6 +24,7 @@ export function DataTable({ columns, data }) {
     const [globalFilter, setGlobalFilter] = React.useState([])
     const [columnVisibility, setColumnVisibility] = React.useState({})
     const [isload, setIsload] = React.useState(false)
+    const route = useRouter()
 
     const fuzzyFilter = (row, columnId, value, addMeta) => {
         // Rank the item
@@ -82,6 +84,7 @@ export function DataTable({ columns, data }) {
                 variant: "success",
             })
             closeModal()
+            route.refresh()
         } catch (error) {
             console.error(error)
             toast({

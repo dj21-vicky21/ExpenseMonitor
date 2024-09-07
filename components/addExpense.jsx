@@ -39,10 +39,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import axios from 'axios'
 import { addExpenseSchema } from '@/schema/schema'
 import { toast } from './ui/use-toast'
+import { useRouter } from 'next/navigation'
 
 function AddExpense() {
     const { AddExpenseModalOpen } = useStore()
     const [isload, setIsload] = React.useState(false)
+    const route = useRouter()
 
     // 1. Define your form.
     const form = useForm({
@@ -74,6 +76,7 @@ function AddExpense() {
                 variant: "success",
             })
             closeModal()
+            route.refresh()
         } catch (error) {
             console.error(error.response)
             toast({
