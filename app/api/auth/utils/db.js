@@ -10,12 +10,6 @@ if (process.env.NODE_ENV === 'production') {
         url: process.env.DATABASE_URL,
       },
     },
-    // Connection pooling settings
-    datasources: {
-      db: {
-        url: process.env.DATABASE_URL + '?connection_limit=5',
-      },
-    },
   });
 } else {
   if (!global.prisma) {
@@ -25,5 +19,9 @@ if (process.env.NODE_ENV === 'production') {
   }
   prisma = global.prisma;
 }
+
+prisma.$on('error', (e) => {
+  console.error('Prisma Client Error:', e);
+});
 
 module.exports = prisma;
